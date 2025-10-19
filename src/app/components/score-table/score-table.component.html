@@ -1,0 +1,39 @@
+<table>
+    <thead>
+        <tr>
+            <th>
+                Player
+            </th>
+            <th>
+                Score
+            </th>
+            <th>
+                Stats
+            </th>
+            <th>
+                Match
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (score of (scores$ | async); track $index) {
+        <tr>
+            <td>
+                <div>
+                    <img [src]="'https://a.ppy.sh/'+score.player_id" class="profile-icon" />
+                    <a [href]="'https://osu.ppy.sh/u/'+score.player_id">{{score.player_id}}</a>
+                </div>
+            </td>
+            <td>{{score.score | number}}</td>
+            <td>
+                <span>{{score.combo}}x</span><br />
+                <app-tooltip [text]="score.count300+' 300s'">
+                    {{calcAcc(score.count300, score.count100, score.count50, score.countmiss) | percent: '2.2'}}
+                </app-tooltip><br />
+                <span>{{score.countmiss}} miss</span>
+            </td>
+            <td><a [href]="'https://osu.ppy.sh/mp/'+score.match_id">{{score.match_id}}</a></td>
+        </tr>
+        }
+    </tbody>
+</table>
