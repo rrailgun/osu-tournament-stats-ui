@@ -3,12 +3,11 @@ import { BehaviorSubject } from 'rxjs';
 import { Scores } from '../../models/scores';
 import { OsuApiService } from '../../services/osu-api.service';
 import { AsyncPipe, DecimalPipe, PercentPipe } from '@angular/common';
-import { TooltipComponent } from '../common/tooltip/tooltip.component';
 import { calcAccuracy } from 'osu-web.js';
 
 @Component({
   selector: 'app-score-table',
-  imports: [AsyncPipe, DecimalPipe, TooltipComponent, PercentPipe],
+  imports: [AsyncPipe, DecimalPipe, PercentPipe],
   templateUrl: './score-table.component.html',
   styleUrl: './score-table.component.css'
 })

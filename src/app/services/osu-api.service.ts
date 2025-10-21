@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
 import { Scores } from '../models/scores';
+import { Tournament } from '../models/tournament';
+import { Round } from '../models/round';
 
 export type ScoresQueryPayload = {
   tournamentId?: string,
@@ -26,5 +28,17 @@ export class OsuApiService {
 
   getScores(scoresQuery: ScoresQueryPayload = {}): Observable<Scores[]> {
     return this.http.post<Scores[]>(this.apiUrl+'/scores/query', scoresQuery)
+  }
+
+  getTournamentDetails(tournamentId: string): Observable<Tournament> {
+    return this.http.get<Tournament>(this.apiUrl+'/tournaments/'+tournamentId);
+  }
+
+  getRounds(tournamentId: string): Observable<Round[]> {
+    return this.http.get<Round[]>(this.apiUrl+'/tournaments'+tournamentId+'/rounds')
+  }
+
+  getTournaments(): Observable<Tournament[]> {
+    return this.http.get<Tournament[]>(this.apiUrl+'/tournaments/search')
   }
 }

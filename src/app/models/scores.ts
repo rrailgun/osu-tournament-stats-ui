@@ -11,4 +11,5 @@ export interface Scores {
     countmiss: number;
     combo: number;
     mods: string[];
+    username: string;
     }

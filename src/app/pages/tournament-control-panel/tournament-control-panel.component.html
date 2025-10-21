@@ -1,0 +1,63 @@
+<ng-container *ngIf="tournament$ | async as tournament; else loading">
+  <div class="container my-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="card-title text-primary mb-4">Control Panel</h2>
+
+        <form class="row g-3 align-items-center mb-4" (ngSubmit)="saveTitle()">
+          <div class="col-auto">
+            <label for="titleInput" class="col-form-label fw-semibold">Title:</label>
+          </div>
+          <div class="col-auto flex-grow-1">
+            <input
+              id="titleInput"
+              type="text"
+              class="form-control"
+              [(ngModel)]="editedTitle"
+              name="title"
+              placeholder="Tournament Title"
+            />
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary px-4">Save Title</button>
+          </div>
+        </form>
+
+        <div class="mb-4">
+          <h6 class="text-muted">Creator</h6>
+          <p class="fs-5">{{ tournament.creator_username }}</p>
+        </div>
+
+        <div class="rounds-section mt-4">
+          <h4 class="text-secondary mb-3">Rounds</h4>
+
+          <ng-container *ngIf="tournament.rounds!.length > 0; else noRounds">
+            <ul ngbNav #roundTabs="ngbNav" class="nav-tabs mb-3">
+              <li *ngFor="let round of tournament.rounds" [ngbNavItem]="round.round_id">
+                <button ngbNavLink>{{ round.round_name }}</button>
+                <ng-template ngbNavContent>
+                  <div class="p-3">
+                    <h5>{{ round.round_name }}</h5>
+                    <app-round-editor></app-round-editor>
+                  </div>
+                </ng-template>
+              </li>
+            </ul>
+
+            <div [ngbNavOutlet]="roundTabs"></div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #loading>
+  <app-loading-indicator message="Loading tournament data..."></app-loading-indicator>
+</ng-template>
+
+<ng-template #noRounds>
+  <div class="alert alert-info mt-3">
+    No rounds yet. <button class="btn btn-sm btn-outline-primary ms-2">Add Round</button>
+  </div>
+</ng-template>

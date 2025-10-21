@@ -1,35 +1,12 @@
-table {
-  width: 100%;
-  height: 100%;
-  border-collapse: collapse;
-  font-family: Arial, sans-serif;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px 12px;
-  text-align: left;
-}
-
-thead {
-  background-color: #f4f4f4;
-}
-
-tr:nth-child(even) {
-  background-color: #fafafa;
-}
-
-th {
-  font-weight: 600;
-  color: #333;
-}
-
 .profile-icon {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
