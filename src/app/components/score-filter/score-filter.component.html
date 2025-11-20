@@ -1,0 +1,37 @@
+<div class="score-filter">
+  <label *ngIf="enableTournamentFilter">
+    Tournament:
+    <select #tournament (change)="onTournamentIdChange(tournament.value)">
+      <option value="">Select Tournament</option>
+      <option *ngFor="let t of tournamentIdOptions" [value]="t">{{ t }}</option>
+    </select>
+  </label>
+  <label *ngIf="enableRoundFilter">
+    Round:
+    <select #round (change)="onRoundIdChange(round.value)">
+      <option value="">Select Round</option>
+      <option *ngFor="let r of roundIdOptions" [value]="r">{{ r }}</option>
+    </select>
+  </label>
+  <label *ngIf="enableMatchFilter">
+    Match:
+    <app-multiselect-dropdown
+      [options]="matchIdOptions"
+      (selectionChange)="onMatchSelectionChange($event)">
+    </app-multiselect-dropdown>
+  </label>
+  <label *ngIf="enablePlayerFilter">
+    Player:
+    <app-multiselect-dropdown
+      [options]="playerIdOptions"
+      (selectionChange)="onPlayerSelectionChange($event)">
+    </app-multiselect-dropdown>
+  </label>
+  <label *ngIf="enableBeatmapFilter">
+    Beatmap:
+    <app-multiselect-dropdown
+      [options]="beatmapIdOptions"
+      (selectionChange)="onBeatmapSelectionChange($event)">
+    </app-multiselect-dropdown>
+  </label>
+</div>

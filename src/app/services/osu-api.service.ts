@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
-import { Scores } from '../models/scores';
+import { GroupedScoresResult, Scores } from '../models/scores';
 import { Tournament } from '../models/tournament';
 import { Round } from '../models/round';
+import { ScoreFilterService, ScoreFilterPayload } from './score-filter.service';
 
 export type ScoresQueryPayload = {
   tournamentId?: string,
@@ -18,9 +19,13 @@ export type ScoresQueryPayload = {
   providedIn: 'root'
 })
 export class OsuApiService {
+  apiUrl: string = environment.apiUrl + '/api';
+  constructor(private http: HttpClient, private scoreFilterService: ScoreFilterService) {}
 
-  apiUrl: string = environment.apiUrl+'/api'
-  constructor(private http: HttpClient) {}
+  groupedScoresQuery(): Observable<GroupedScoresResult[]> {
+    let payload: ScoreFilterPayload = this.scoreFilterService.payload;
+    return this.http.post<GroupedScoresResult[]>(this.apiUrl + '/scores/groupedQuery', payload);
+  }
 
   getSelf(): Observable<User> {
     return this.http.get<User>(this.apiUrl+'/players/getSelf');

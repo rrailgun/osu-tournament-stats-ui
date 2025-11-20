@@ -1,0 +1,17 @@
+<div ngbDropdown class="d-inline-block" [open]="dropdownOpen" (openChange)="dropdownOpen = $event">
+  <button ngbDropdownToggle class="btn btn-outline-secondary btn-sm w-100" type="button" (click)="openDropdown()">
+    {{ selected.length ? `(${selected.length})` : 'All' }}
+  </button>
+  <div ngbDropdownMenu class="p-2" style="min-width: 220px;">
+    <div *ngFor="let option of options">
+      <label class="w-100">
+        <input type="checkbox" [checked]="isChecked(option)" (change)="onCheckboxChange(option, $event)">
+        {{ option }}
+      </label>
+    </div>
+    <div class="d-flex justify-content-between mt-2">
+      <button class="btn btn-primary btn-sm" (click)="applySelection()" type="button">Apply</button>
+      <button class="btn btn-link btn-sm" (click)="clearSelection()" type="button">Clear</button>
+    </div>
+  </div>
+</div>

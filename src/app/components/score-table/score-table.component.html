@@ -16,12 +16,12 @@
         </tr>
     </thead>
     <tbody>
-        @for (score of (scores$ | async); track $index) {
+        @for (score of scores; track $index) {
         <tr>
             <td>
                 <div class="user-cell">
                     <img [src]="'https://a.ppy.sh/'+score.player_id" class="profile-icon" />
-                    <a [href]="'https://osu.ppy.sh/u/'+score.player_id">{{score.username}}</a>
+                    <a [href]="'https://osu.ppy.sh/u/'+score.player_id">{{score.player_username}}</a>
                 </div>
             </td>
             <td>{{score.score | number}}</td>
@@ -30,7 +30,7 @@
                 <span>{{calcAcc(score.count300, score.count100, score.count50, score.countmiss) | percent: '2.2'}}</span><br />
                 <span>{{score.countmiss}} miss</span>
             </td>
-            <td><a [href]="'https://osu.ppy.sh/mp/'+score.match_id">{{score.match_id}}</a></td>
+            <td><a [href]="'https://osu.ppy.sh/mp/'+score.match_id">{{score.match_name}}</a></td>
         </tr>
         }
     </tbody>
