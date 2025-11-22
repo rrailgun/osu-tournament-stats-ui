@@ -1,27 +1,32 @@
 <div *ngIf="(tournamentDetails$ | async) as tournament">
-	<div *ngIf="tournament!.rounds!.length > 0; else noRounds">
-		<app-score-filter [enableTournamentFilter]="false" [enableRoundFilter]="false" [enableBeatmapFilter]="false"></app-score-filter>
-		<div class="tabs">
-			<button *ngFor="let round of tournament.rounds; let i = index" [class.active]="i === selectedRoundIndex"
-				(click)="selectRound(i)">
-				{{ round.round_name }}
-			</button>
-		</div>
-		<div class="tab-content" *ngIf="tournament.rounds[selectedRoundIndex] as selectedRound">
-			<h3>{{ selectedRound.round_name }}</h3>
-			<ng-container *ngIf="(groupedScores$ | async) as groupedScores">
-				<ng-container *ngFor="let group of groupedScores">
-					<!--
-					This grouping makes it shit to handle data constant by groups and needs to get changed
-					This will get really messy if the db gets large with many scores
-					-->
-					<h4>{{`${group.rows[0].beatmap_artist} - ${group.rows[0].beatmap_title}[${group.rows[0].difficulty_name}]`}}</h4>
-					<app-score-table [scores]="group.rows"></app-score-table>
+	<div *ngIf="tournament!.rounds!.length > 0">
+		<!-- <app-score-filter [enableTournamentFilter]="false" [enableRoundFilter]="false" [enableBeatmapFilter]="false"></app-score-filter> -->
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="nav-item" *ngFor="let round of tournament.rounds">
+				<a class="nav-link" role="tab" href='javascript:void(0);' [class.active]="round === selectedRound"
+					(click)="selectRound(round);">
+					{{ round.round_name }}
+				</a>
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" role="tabpanel" *ngIf="selectedRound">
+				<ng-container *ngIf="(groupedScores$ | async) as groupedScores">
+					<div class="group-grid">
+						<ng-container *ngFor="let group of groupedScores">
+							<div class="group-item">
+								<h4 class="group-title">{{`${group.beatmap_info.artist} -
+									${group.beatmap_info.title}[${group.beatmap_info.difficulty_name}]`}}</h4>
+								<div class="table-wrapper">
+									<app-score-table [scores]="group.scores"></app-score-table>
+								</div>
+							</div>
+						</ng-container>
+					</div>
 				</ng-container>
-			</ng-container>
+			</div>
 		</div>
+		<ng-template #noRounds>
+			<p>No rounds available for this tournament.</p>
+		</ng-template>
 	</div>
-	<ng-template #noRounds>
-		<p>No rounds available for this tournament.</p>
-	</ng-template>
-</div>

@@ -2,13 +2,22 @@
     <thead>
         <tr>
             <th>
+                #
+            </th>
+            <th>
                 Player
             </th>
             <th>
                 Score
             </th>
             <th>
-                Stats
+                Accuracy
+            </th>
+            <th>
+                Combo
+            </th>
+            <th>
+                Mods
             </th>
             <th>
                 Match
@@ -19,17 +28,20 @@
         @for (score of scores; track $index) {
         <tr>
             <td>
+                #{{ $index + 1 }}
+            </td>
+            <td>
                 <div class="user-cell">
                     <img [src]="'https://a.ppy.sh/'+score.player_id" class="profile-icon" />
-                    <a [href]="'https://osu.ppy.sh/u/'+score.player_id">{{score.player_username}}</a>
+                    <a [href]="'https://osu.ppy.sh/u/'+score.player_id">{{score.username}}</a>
                 </div>
             </td>
             <td>{{score.score | number}}</td>
             <td>
-                <span>{{score.combo}}x</span><br />
                 <span>{{calcAcc(score.count300, score.count100, score.count50, score.countmiss) | percent: '2.2'}}</span><br />
-                <span>{{score.countmiss}} miss</span>
             </td>
+            <td>{{score.combo}}x</td>
+            <td>{{score.mods}}</td>
             <td><a [href]="'https://osu.ppy.sh/mp/'+score.match_id">{{score.match_name}}</a></td>
         </tr>
         }

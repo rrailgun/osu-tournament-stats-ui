@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
-import { GroupedScoresResult, Scores } from '../models/scores';
+import { GroupedScoreResultByBeatmapId, GroupedScoresResult, Scores } from '../models/scores';
 import { Tournament } from '../models/tournament';
 import { Round } from '../models/round';
 import { ScoreFilterService, ScoreFilterPayload } from './score-filter.service';
@@ -25,6 +25,11 @@ export class OsuApiService {
   groupedScoresQuery(): Observable<GroupedScoresResult[]> {
     let payload: ScoreFilterPayload = this.scoreFilterService.payload;
     return this.http.post<GroupedScoresResult[]>(this.apiUrl + '/scores/groupedQuery', payload);
+  }
+
+  getScoreGroupedByBeatmapId(): Observable<GroupedScoreResultByBeatmapId[]> {
+    let payload: ScoreFilterPayload = this.scoreFilterService.payload;
+    return this.http.post<GroupedScoreResultByBeatmapId[]>(this.apiUrl + '/scores/query/group/beatmap', payload);
   }
 
   getSelf(): Observable<User> {

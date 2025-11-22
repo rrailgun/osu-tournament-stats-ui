@@ -1,3 +1,5 @@
+import { Beatmap } from "./beatmap";
+
 export interface Scores {
     match_id: number;
     player_id: number;
@@ -15,19 +17,20 @@ export interface Scores {
     round_id: string;
     tournament_id: string;
     slot: string;
-    player_username: string;
+    username: string;
     country_code: string;
     country_name: string;
-    beatmap_title: string;
-    beatmap_artist: string;
-    beatmap_creator: string;
-    beatmap_sr: number;
+    title: string;
+    artist: string;
+    creator: string;
+    difficulty_rating: number;
+    difficulty_name: string;
+    beatmapset_id: number;
     match_name: string;
     round_name: string;
     tournament_name: string;
-    difficulty_name: string;
-    beatmapset_id: number;
 }
+
 
 
 
@@ -36,3 +39,8 @@ export interface GroupedScoresResult {
     column: string;
     rows: Scores[];
 };
+
+export interface GroupedScoreResultByBeatmapId {
+    beatmap_info: Beatmap;
+    scores: Scores[];
+}
