@@ -34,3 +34,7 @@
     transform: translateX(-50%)
   }
 }
+
+h1 {
+  cursor: pointer;
+}

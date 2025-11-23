@@ -3,24 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user';
-import { GroupedScoreResultByBeatmapId, GroupedScoresResult, Scores } from '../models/scores';
+import { GroupedScoreResultByBeatmapId, GroupedScoresResult, Score } from '../models/scores';
 import { Tournament } from '../models/tournament';
 import { Round } from '../models/round';
 import { ScoreFilterService, ScoreFilterPayload } from './score-filter.service';
-
-export type ScoresQueryPayload = {
-  tournamentId?: string,
-  playerId?: number,
-  matchId?: number,
-  beatmapId?: number
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class OsuApiService {
   apiUrl: string = environment.apiUrl + '/api';
-  constructor(private http: HttpClient, private scoreFilterService: ScoreFilterService) {}
+  constructor(private http: HttpClient, private scoreFilterService: ScoreFilterService) { }
 
   groupedScoresQuery(): Observable<GroupedScoresResult[]> {
     let payload: ScoreFilterPayload = this.scoreFilterService.payload;
@@ -33,22 +26,29 @@ export class OsuApiService {
   }
 
   getSelf(): Observable<User> {
-    return this.http.get<User>(this.apiUrl+'/players/getSelf');
+    return this.http.get<User>(this.apiUrl + '/players/getSelf');
   }
 
-  getScores(scoresQuery: ScoresQueryPayload = {}): Observable<Scores[]> {
-    return this.http.post<Scores[]>(this.apiUrl+'/scores/query', scoresQuery)
+  getScores(): Observable<Score[]> {
+    let payload = this.scoreFilterService.payload
+    payload = {
+      ...(payload.tournamentId ? { tournamentId: payload.tournamentId } : {}),
+      ...(payload.roundId ? { roundId: payload.roundId } : {}),
+      ...(payload.playerIds ? { playerIds: payload.playerIds } : {}),
+      ...(payload.beatmapIds ? { beatmapIds: payload.beatmapIds } : {}),
+    };
+    return this.http.post<Score[]>(this.apiUrl + '/scores/query', payload)
   }
 
   getTournamentDetails(tournamentId: string): Observable<Tournament> {
-    return this.http.get<Tournament>(this.apiUrl+'/tournaments/'+tournamentId);
+    return this.http.get<Tournament>(this.apiUrl + '/tournaments/' + tournamentId);
   }
 
   getRounds(tournamentId: string): Observable<Round[]> {
-    return this.http.get<Round[]>(this.apiUrl+'/tournaments'+tournamentId+'/rounds')
+    return this.http.get<Round[]>(this.apiUrl + '/tournaments' + tournamentId + '/rounds')
   }
 
   getTournaments(): Observable<Tournament[]> {
-    return this.http.get<Tournament[]>(this.apiUrl+'/tournaments/search')
+    return this.http.get<Tournament[]>(this.apiUrl + '/tournaments/search')
   }
 }

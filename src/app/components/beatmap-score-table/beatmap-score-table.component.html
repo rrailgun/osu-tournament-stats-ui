@@ -33,12 +33,13 @@
             <td>
                 <div class="user-cell">
                     <img [src]="'https://a.ppy.sh/'+score.player_id" class="profile-icon" />
-                    <a [href]="'https://osu.ppy.sh/u/'+score.player_id">{{score.username}}</a>
+                    <a [routerLink]="['/player', score.player_id]">{{ score.username }}</a>
                 </div>
             </td>
             <td>{{score.score | number}}</td>
             <td>
-                <span>{{calcAcc(score.count300, score.count100, score.count50, score.countmiss) | percent: '2.2'}}</span><br />
+                <span>{{calcAcc(score.count300, score.count100, score.count50, score.countmiss) | percent:
+                    '2.2'}}</span><br />
             </td>
             <td>{{score.combo}}x</td>
             <td>{{score.mods}}</td>

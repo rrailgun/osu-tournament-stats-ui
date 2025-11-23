@@ -5,15 +5,14 @@ import { BehaviorSubject } from 'rxjs';
 import { Tournament } from '../../models/tournament';
 import { Round } from '../../models/round';
 import { ActivatedRoute } from '@angular/router';
-
 import { CommonModule } from '@angular/common';
-import { ScoreFilterComponent } from "../../components/score-filter/score-filter.component";
-import { ScoreTableComponent } from "../../components/score-table/score-table.component";
+import { BeatmapScoreTableComponent } from "../../components/beatmap-score-table/beatmap-score-table.component";
 import { ScoreFilterService } from '../../services/score-filter.service';
+import { LoadingIndicatorComponent } from "../../components/common/loading-indicator/loading-indicator.component";
 
 @Component({
   selector: 'app-tournament-page',
-  imports: [CommonModule, ScoreFilterComponent, ScoreTableComponent],
+  imports: [CommonModule, LoadingIndicatorComponent, BeatmapScoreTableComponent],
   templateUrl: './tournament-page.component.html',
   styleUrl: './tournament-page.component.css'
 })
@@ -27,6 +26,7 @@ export class TournamentPageComponent implements OnInit {
   public groupedScores$: BehaviorSubject<GroupedScoreResultByBeatmapId[] | undefined> = new BehaviorSubject<GroupedScoreResultByBeatmapId[] | undefined>(undefined);
 
   public selectedRound: Round | undefined;
+  loading: boolean = true;
 
   ngOnInit(): void {
     this.scoreFilterService.setTournamentId(this.tournamentId);
@@ -45,10 +45,13 @@ export class TournamentPageComponent implements OnInit {
   getGroupedScores(): void {
     this.osuApi.getScoreGroupedByBeatmapId().subscribe(res => {
       this.groupedScores$.next(res);
+      this.loading = false;
     });
   }
 
   public selectRound(round: Round): void {
+    if (this.selectedRound?.round_id === round.round_id) return;
+    this.loading = true;
     this.selectedRound = round;
     this.scoreFilterService.setRoundId(round.round_id);
     this.getGroupedScores();

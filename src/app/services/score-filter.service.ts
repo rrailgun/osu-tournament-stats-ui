@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, filter } from 'rxjs';
 import { ScoreGroupBy } from '../enums/score.enum';
+import { NavigationEnd, Router } from '@angular/router';
 
 export interface ScoreFilterPayload {
   tournamentId?: string;
@@ -8,17 +9,23 @@ export interface ScoreFilterPayload {
   matchIds?: string[];
   playerIds?: string[];
   beatmapIds?: string[];
-  groupBy: ScoreGroupBy;
+  groupBy?: ScoreGroupBy;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScoreFilterService {
-  private readonly _payloadSubject = new BehaviorSubject<ScoreFilterPayload>({
-    groupBy: ScoreGroupBy.BEATMAP_ID
-  });
+  private readonly _payloadSubject = new BehaviorSubject<ScoreFilterPayload>({});
   readonly payload$ = this._payloadSubject.asObservable();
+
+  constructor(private router: Router) {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.reset();
+      });
+  }
 
   private update(payload: Partial<ScoreFilterPayload>, remove?: (keyof ScoreFilterPayload)[]) {
     let next = {
@@ -59,5 +66,9 @@ export class ScoreFilterService {
 
   setBeatmapId(beatmapIds: string[]) {
     this.setFilter('beatmapIds', beatmapIds);
+  }
+
+  reset() {
+    this._payloadSubject.next({});
   }
 }

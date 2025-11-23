@@ -1,6 +1,6 @@
 import { Beatmap } from "./beatmap";
 
-export interface Scores {
+export interface Score {
     match_id: number;
     player_id: number;
     beatmap_id: number;
@@ -37,10 +37,10 @@ export interface Scores {
 export interface GroupedScoresResult {
     key: string;
     column: string;
-    rows: Scores[];
+    rows: Score[];
 };
 
 export interface GroupedScoreResultByBeatmapId {
     beatmap_info: Beatmap;
-    scores: Scores[];
+    scores: Score[];
 }

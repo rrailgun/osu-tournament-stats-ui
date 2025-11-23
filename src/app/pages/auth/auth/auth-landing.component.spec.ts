@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScoreTableComponent } from './score-table.component';
+import { AuthLandingComponent } from '../auth-landing.component';
 
-describe('ScoreTableComponent', () => {
-  let component: ScoreTableComponent;
-  let fixture: ComponentFixture<ScoreTableComponent>;
+describe('AuthLandingComponent', () => {
+  let component: AuthLandingComponent;
+  let fixture: ComponentFixture<AuthLandingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ScoreTableComponent]
+      imports: [AuthLandingComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ScoreTableComponent);
+    fixture = TestBed.createComponent(AuthLandingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

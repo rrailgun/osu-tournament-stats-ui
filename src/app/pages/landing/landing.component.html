@@ -1,9 +1,8 @@
 <h2>Tournaments</h2>
 <div>
     @for (tournament of (tournaments$|async); track $index) {
-        <app-card [title]="tournament.name" (cardClick)="onCardClick(tournament.id)">
+        <app-card [title]="tournament.name" [content]="tournament.creator_username" (cardClick)="onCardClick(tournament.id)">
 
         </app-card>
     }
 </div>
-<!-- <app-score-table></app-score-table> -->

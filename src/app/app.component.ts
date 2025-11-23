@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { buildUrl } from 'osu-web.js';
 import { environment } from '../environments/environment';
 import { User } from './models/user';
@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
 
 
   osuApi: OsuApiService = inject(OsuApiService)
+  private router: Router = inject(Router);
 
   ngOnInit(): void {
     this.osuApi.getSelf().subscribe( res => {
@@ -30,7 +31,11 @@ export class AppComponent implements OnInit {
   }
 
   login() {
-    window.location.href = buildUrl.authRequest(44993, `${environment.apiUrl}/api/auth/cb`, ['identify', 'public']);
+    window.location.href = buildUrl.authRequest(44993, 'http://localhost:4200/auth', ['identify']);
+  }
+
+  goHome() {
+    this.router.navigate(['/']);
   }
 
 

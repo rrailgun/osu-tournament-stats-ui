@@ -1,5 +1,5 @@
 <div class="nav-bar">
-    <h1>osu! Tournament Scores</h1>
+    <h1 (click)="goHome()">osu! Tournament Scores</h1>
     <ng-container *ngIf="!loading">
         <section class="user-info" *ngIf="userInfo">
             <img [src]="'https://a.ppy.sh/'+userInfo.player_id" alt="Profile Icon" class="profile-icon" />
