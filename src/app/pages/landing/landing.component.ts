@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { BeatmapScoreTableComponent } from '../../components/beatmap-score-table/beatmap-score-table.component';
+import { BeatmapScoreTableComponent } from '../../components/tables/beatmap-score-table/beatmap-score-table.component';
 import { OsuApiService } from '../../services/osu-api.service';
 import { BehaviorSubject } from 'rxjs';
 import { Tournament } from '../../models/tournament';

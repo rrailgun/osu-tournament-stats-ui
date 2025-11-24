@@ -1,18 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { OsuApiService } from '../../services/osu-api.service';
-import { GroupedScoreResultByBeatmapId, GroupedScoresResult } from '../../models/scores';
+import { GroupedScoreResultByBeatmapId } from '../../models/scores';
 import { BehaviorSubject } from 'rxjs';
 import { Tournament } from '../../models/tournament';
 import { Round } from '../../models/round';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { BeatmapScoreTableComponent } from "../../components/beatmap-score-table/beatmap-score-table.component";
+import { BeatmapScoreTableComponent } from "../../components/tables/beatmap-score-table/beatmap-score-table.component";
 import { ScoreFilterService } from '../../services/score-filter.service';
 import { LoadingIndicatorComponent } from "../../components/common/loading-indicator/loading-indicator.component";
+import { BeatmapBannerComponent } from '../../components/common/beatmap-banner/beatmap-banner.component';
 
 @Component({
   selector: 'app-tournament-page',
-  imports: [CommonModule, LoadingIndicatorComponent, BeatmapScoreTableComponent],
+  imports: [CommonModule, LoadingIndicatorComponent, BeatmapScoreTableComponent, BeatmapBannerComponent],
   templateUrl: './tournament-page.component.html',
   styleUrl: './tournament-page.component.css'
 })

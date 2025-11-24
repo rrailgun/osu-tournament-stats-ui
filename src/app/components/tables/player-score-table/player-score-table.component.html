@@ -1,0 +1,32 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Beatmap</th>
+      <th>Score</th>
+      <th>Accuracy</th>
+      <th>Combo</th>
+      <th>Mods</th>
+      <th>Rank</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let score of scores; let i = index">
+      <td>#{{ i + 1 }}</td>
+      <td>
+        <div class="beatmap-cell">
+          <a [href]="'https://osu.ppy.sh/beatmapsets/' + score.beatmapset_id + '#osu/' + score.beatmap_id" target="_blank">
+            {{ score.artist }} - {{ score.title }} [{{ score.difficulty_name }}]
+          </a>
+        </div>
+      </td>
+      <td>{{ score.score | number }}</td>
+      <td>{{ score.accuracy | percent:'1.2-2' }}</td>
+      <td>{{ score.combo }}x</td>
+      <td>{{ score.mods.join(', ') || 'None' }}</td>
+      <td>{{ score.rank }}</td>
+      <td>{{ score.date | date:'medium' }}</td>
+    </tr>
+  </tbody>
+</table>

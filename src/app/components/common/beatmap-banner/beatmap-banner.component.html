@@ -1,0 +1,13 @@
+<div class="beatmap-banner" [style.background-image]="'url(' + coverUrl + ')'">
+    <div class="overlay">
+        <div class="info">
+            <h2>{{ beatmapInfo.artist }} - {{ beatmapInfo.title }}[{{ beatmapInfo.difficulty_name }}]</h2>
+            <p>Mapper: {{ beatmapInfo.creator }}</p>
+            <p>{{ starRating }}</p>
+            <a [href]="'https://osu.ppy.sh/beatmapsets/' + beatmapInfo.beatmapset_id + '#osu/' + beatmapInfo.beatmap_id"
+                target="_blank">
+                View on osu!
+            </a>
+        </div>
+    </div>
+</div>
