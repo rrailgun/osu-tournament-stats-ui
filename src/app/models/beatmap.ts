@@ -6,4 +6,5 @@ export interface Beatmap {
     beatmapset_id: number;
     difficulty_rating: number;
     difficulty_name: string;
+    slot: string;
 }

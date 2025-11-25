@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Beatmap } from '../../../models/beatmap';
+import { RouterLink, RouterModule } from "@angular/router";
 
 @Component({
   selector: 'app-beatmap-banner',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, RouterModule],
   templateUrl: './beatmap-banner.component.html',
   styleUrls: ['./beatmap-banner.component.css']
 })

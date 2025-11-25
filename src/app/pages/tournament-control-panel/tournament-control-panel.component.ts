@@ -6,13 +6,12 @@ import { Observable } from 'rxjs';
 import { Tournament } from '../../models/tournament';
 import { LoadingIndicatorComponent } from "../../components/common/loading-indicator/loading-indicator.component";
 import { TournamentService } from '../../services/edit/tournament-edit.service';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { RoundEditorComponent } from "../../components/editors/round-editor/round-editor.component";
 
 
 @Component({
   selector: 'app-tournament-control-panel',
-  imports: [CommonModule, AsyncPipe, FormsModule, LoadingIndicatorComponent, NgbNavModule, RoundEditorComponent],
+  imports: [CommonModule, AsyncPipe, FormsModule, LoadingIndicatorComponent, RoundEditorComponent],
   templateUrl: './tournament-control-panel.component.html',
   styleUrl: './tournament-control-panel.component.css'
 })

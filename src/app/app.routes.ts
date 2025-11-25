@@ -5,6 +5,7 @@ import { TournamentPageComponent } from './pages/tournament-page/tournament-page
 import { TournamentControlPanelComponent } from './pages/tournament-control-panel/tournament-control-panel.component';
 import { AuthLandingComponent } from './pages/auth/auth/auth-landing.component';
 import { FailedComponent } from './pages/auth/failed/failed.component';
+import { BeatmapPageComponent } from './pages/beatmap-page/beatmap-page.component';
 
 export const routes: Routes = [
     {
@@ -26,6 +27,10 @@ export const routes: Routes = [
     {
         path: 'tournament/:tournamentId',
         component: TournamentPageComponent
+    },
+    {
+        path: 'beatmap/:beatmapId', // TBA, might need beatmapsetId as well + mode
+        component: BeatmapPageComponent 
     },
     {
         path: 'edit/:tournamentId',

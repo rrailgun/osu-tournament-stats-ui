@@ -1,0 +1,11 @@
+<div class="dropdown">
+    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi-three-dots-vertical"></i>
+    </button>
+    <ul class="dropdown-menu">
+        @if (score) {
+            <li><a class="dropdown-item" [href]="'https://osu.ppy.sh/users/'+score.player_id" target="_blank">View osu! Profile</a></li>
+            <li><a class="dropdown-item" [href]="'https://osu.ppy.sh/mp/'+score.match_id" target="_blank">View osu! Match</a></li>
+        }
+    </ul>
+</div>

@@ -32,8 +32,8 @@
           <h4 class="text-secondary mb-3">Rounds</h4>
 
           <ng-container *ngIf="tournament.rounds!.length > 0; else noRounds">
-            <ul ngbNav #roundTabs="ngbNav" class="nav-tabs mb-3">
-              <li *ngFor="let round of tournament.rounds" [ngbNavItem]="round.round_id">
+            <ul class="nav-tabs mb-3">
+              <li *ngFor="let round of tournament.rounds">
                 <button ngbNavLink>{{ round.round_name }}</button>
                 <ng-template ngbNavContent>
                   <div class="p-3">
@@ -43,8 +43,6 @@
                 </ng-template>
               </li>
             </ul>
-
-            <div [ngbNavOutlet]="roundTabs"></div>
           </ng-container>
         </div>
       </div>

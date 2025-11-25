@@ -1,8 +1,9 @@
 <h2>Tournaments</h2>
 <div>
     @for (tournament of (tournaments$|async); track $index) {
-        <app-card [title]="tournament.name" [content]="tournament.creator_username" (cardClick)="onCardClick(tournament.id)">
-
-        </app-card>
+    <div class="card text-bg-dark p-3 mb-3 hover-card" (click)="onCardClick(tournament.id)">
+        <h5 class="card-title">{{ tournament.name }}</h5>
+        <p class="card-text">{{ tournament.creator_username }}</p>
+    </div>
     }
 </div>

@@ -1,13 +1,15 @@
-<div class="beatmap-banner" [style.background-image]="'url(' + coverUrl + ')'">
-    <div class="overlay">
-        <div class="info">
-            <h2>{{ beatmapInfo.artist }} - {{ beatmapInfo.title }}[{{ beatmapInfo.difficulty_name }}]</h2>
-            <p>Mapper: {{ beatmapInfo.creator }}</p>
-            <p>{{ starRating }}</p>
-            <a [href]="'https://osu.ppy.sh/beatmapsets/' + beatmapInfo.beatmapset_id + '#osu/' + beatmapInfo.beatmap_id"
-                target="_blank">
-                View on osu!
+<div class="card text-bg-dark">
+    <img [src]="coverUrl" class="card-img">
+    <div class="card-img-overlay">
+        <div>
+            <a class="card-title h3 d-inline-block" [routerLink]="['/beatmap', beatmapInfo.beatmap_id]">
+                {{ beatmapInfo.artist }} - {{ beatmapInfo.title }} [{{ beatmapInfo.difficulty_name }}]
             </a>
+            <p class="card-text">Mapper: {{ beatmapInfo.creator }}</p>
+            <span class="badge text-bg-secondary">{{beatmapInfo.slot}}</span>
         </div>
+        <a [href]="'https://osu.ppy.sh/b/'+beatmapInfo.beatmap_id" target="_blank" class="btn position-absolute top-0 end-0 m-2" id="open-beatmap">
+            <i class="bi bi-box-arrow-in-up-right text-white"></i>
+        </a>
     </div>
 </div>

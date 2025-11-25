@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-multiselect-dropdown',
   templateUrl: './multiselect-dropdown.component.html',
   styleUrls: ['./multiselect-dropdown.component.css'],
-  imports: [CommonModule, NgbDropdownModule]
+  imports: [CommonModule]
 })
 export class MultiselectDropdownComponent {
   @Input() options: string[] = [];

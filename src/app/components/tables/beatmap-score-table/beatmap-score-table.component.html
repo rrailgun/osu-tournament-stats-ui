@@ -22,6 +22,7 @@
             <th>
                 Match
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -36,7 +37,7 @@
                     <a [routerLink]="['/player', score.player_id]">{{ score.username }}</a>
                 </div>
             </td>
-            <td>{{score.score | number}}</td>
+            <td (click)="openScore(score)">{{score.score | number}}</td>
             <td>
                 <span>{{calcAcc(score.count300, score.count100, score.count50, score.countmiss) | percent:
                     '2.2'}}</span><br />
@@ -44,7 +45,13 @@
             <td>{{score.combo}}x</td>
             <td>{{score.mods}}</td>
             <td><a [href]="'https://osu.ppy.sh/mp/'+score.match_id">{{score.match_name}}</a></td>
+            <td><app-score-dropdown [score]="score"></app-score-dropdown></td>
         </tr>
+        }
+        @if (!scores.length) {
+            <tr>
+                <td colspan="7" class="text-center">No scores found.</td>
+            </tr>
         }
     </tbody>
 </table>

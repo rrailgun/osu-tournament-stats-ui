@@ -9,6 +9,7 @@
       <th>Mods</th>
       <th>Rank</th>
       <th>Date</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -16,7 +17,7 @@
       <td>#{{ i + 1 }}</td>
       <td>
         <div class="beatmap-cell">
-          <a [href]="'https://osu.ppy.sh/beatmapsets/' + score.beatmapset_id + '#osu/' + score.beatmap_id" target="_blank">
+          <a [routerLink]="['/beatmap',score.beatmap_id]">
             {{ score.artist }} - {{ score.title }} [{{ score.difficulty_name }}]
           </a>
         </div>
@@ -27,6 +28,12 @@
       <td>{{ score.mods.join(', ') || 'None' }}</td>
       <td>{{ score.rank }}</td>
       <td>{{ score.date | date:'medium' }}</td>
+      <td><app-score-dropdown [score]="score"></app-score-dropdown></td>
     </tr>
+    @if (!scores.length) {
+    <tr>
+      <td colspan="8" class="text-center">No scores found.</td>
+    </tr>
+    }
   </tbody>
 </table>

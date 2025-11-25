@@ -1,15 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { BeatmapScoreTableComponent } from '../../components/tables/beatmap-score-table/beatmap-score-table.component';
 import { OsuApiService } from '../../services/osu-api.service';
 import { BehaviorSubject } from 'rxjs';
 import { Tournament } from '../../models/tournament';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { CardComponent } from '../../components/common/card/card.component';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing',
-  imports: [CommonModule, AsyncPipe, CardComponent],
+  imports: [CommonModule, AsyncPipe],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })
