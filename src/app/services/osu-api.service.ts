@@ -51,4 +51,12 @@ export class OsuApiService {
   getTournaments(): Observable<Tournament[]> {
     return this.http.get<Tournament[]>(this.apiUrl + '/tournaments/search')
   }
+
+  createTournament(name: string): Observable<Tournament> {
+    return this.http.post<Tournament>(this.apiUrl + '/tournaments/createTournament', { name });
+  }
+
+  createRound(tournamentId: string, name: string): Observable<Round> {
+    return this.http.post<Round>(this.apiUrl + '/tournaments/createRound', { tournamentId, name });
+  }
 }

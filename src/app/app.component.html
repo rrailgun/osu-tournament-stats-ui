@@ -1,11 +1,25 @@
 <div class="nav-bar">
     <h1 (click)="goHome()">osu! Tournament Scores</h1>
-    <ng-container *ngIf="!loading">
-        <section class="user-info" *ngIf="userInfo">
-            <img [src]="'https://a.ppy.sh/'+userInfo.player_id" alt="Profile Icon" class="profile-icon" />
-            <span class="username">{{userInfo.username}}</span>
+    <ng-container>
+        <a *ngIf="authService.loggedIn()" routerLink="/create" class="btn btn-primary ms-1">
+            <i class="bi bi-plus-lg me-1"></i>
+            Create Tournament
+        </a>
+        <section class="user-info position-relative" *ngIf="(userInfo | async) as user; else loggedOut">
+            <div class="user-profile-toggle d-flex align-items-center" (click)="toggleDropdown($event)">
+                <img [src]="'https://a.ppy.sh/'+user.id" alt="Profile Icon" class="profile-icon me-2" />
+                <span class="username">{{user.username}}</span>
+            </div>
+            <div class="dropdown-menu dropdown-menu-dark show position-absolute"
+                style="top: 100%; right: 0; margin-top: 0.5rem;" *ngIf="isDropdownOpen">
+                <a class="dropdown-item text-danger" (click)="logout()" style="cursor: pointer;">
+                    Logout
+                </a>
+            </div>
         </section>
-        <button id="loginButton" *ngIf="!userInfo" (click)="login()">Login</button>
+        <ng-template #loggedOut>
+            <button id="loginButton" (click)="login()">Login</button>
+        </ng-template>
     </ng-container>
 </div>
 <router-outlet></router-outlet>

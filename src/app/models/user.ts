@@ -1,4 +1,6 @@
 export interface User {
-    username: number;
-    player_id: number
+    id: number;
+    username: string;
+    country_code: string | null;
+    country_name: string | null;
 }

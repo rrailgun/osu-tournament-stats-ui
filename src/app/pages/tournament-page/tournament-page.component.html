@@ -1,6 +1,5 @@
 <div *ngIf="(tournamentDetails$ | async) as tournament">
 	<div *ngIf="tournament!.rounds!.length > 0">
-		<!-- <app-score-filter [enableTournamentFilter]="false" [enableRoundFilter]="false" [enableBeatmapFilter]="false"></app-score-filter> -->
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item" *ngFor="let round of tournament.rounds">
 				<a class="nav-link" role="tab" href='javascript:void(0);' [class.active]="round === selectedRound"
@@ -12,23 +11,23 @@
 		<div class="tab-content">
 			<div class="tab-pane active" role="tabpanel" *ngIf="selectedRound">
 				@if (loading) {
-					<app-loading-indicator></app-loading-indicator>
+				<app-loading-indicator></app-loading-indicator>
 				}
 				@else {
-					<ng-container *ngIf="(groupedScores$ | async) as groupedScores">
-						<div class="group-grid">
-							<ng-container *ngFor="let group of groupedScores">
-								<div class="group-item">
-									<!-- <h4 class="group-title">{{`${group.beatmap_info.artist} -
+				<ng-container *ngIf="(groupedScores$ | async) as groupedScores">
+					<div class="group-grid">
+						<ng-container *ngFor="let group of groupedScores">
+							<div class="group-item">
+								<!-- <h4 class="group-title">{{`${group.beatmap_info.artist} -
 										${group.beatmap_info.title}[${group.beatmap_info.difficulty_name}]`}}</h4> -->
-										<app-beatmap-banner [beatmapInfo]="group.beatmap_info"></app-beatmap-banner>
-									<div class="table-wrapper">
-										<app-beatmap-score-table [scores]="group.scores"></app-beatmap-score-table>
-									</div>
+								<app-beatmap-banner [beatmapInfo]="group.beatmap_info"></app-beatmap-banner>
+								<div class="table-wrapper">
+									<app-beatmap-score-table [scores]="group.scores"></app-beatmap-score-table>
 								</div>
-							</ng-container>
-						</div>
-					</ng-container>
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
 				}
 			</div>
 		</div>

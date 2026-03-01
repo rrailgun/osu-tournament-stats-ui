@@ -1,9 +1,24 @@
-<h2>Tournaments</h2>
-<div>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Tournaments</h2>
+</div>
+<div id="tourney-box-holder">
     @for (tournament of (tournaments$|async); track $index) {
-    <div class="card text-bg-dark p-3 mb-3 hover-card" (click)="onCardClick(tournament.id)">
-        <h5 class="card-title">{{ tournament.name }}</h5>
-        <p class="card-text">{{ tournament.creator_username }}</p>
+    <div class="card text-bg-dark p-3 hover-card">
+        <div class="justify-content-between">
+            <div>
+                <h5 class="card-title mb-1">{{ tournament.name }}</h5>
+                <p class="card-text mb-1">{{ tournament.creator_username }}</p>
+            </div>
+            <div class="d-flex mt-4">
+                <button class="btn btn-primary me-1" (click)="onCardClick(tournament.id); $event.stopPropagation()">
+                    Open
+                </button>
+                <button *ngIf="(user | async)?.id === tournament.creator" class="btn btn-secondary"
+                    (click)="onEditClick(tournament.id); $event.stopPropagation()">
+                    Edit
+                </button>
+            </div>
+        </div>
     </div>
     }
 </div>

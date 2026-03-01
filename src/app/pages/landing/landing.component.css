@@ -1,3 +1,9 @@
 app-card:hover {
     cursor: pointer;
 }
+
+#tourney-box-holder {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
