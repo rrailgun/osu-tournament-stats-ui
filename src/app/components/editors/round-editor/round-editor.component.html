@@ -1,1 +1,63 @@
-<p>round-editor works!</p>
+<div class="row w-100 m-0">
+    <!-- Left Section: Beatmap Pool -->
+    <div class="col-md-6 border-end pe-4">
+        <h6 class="text-secondary mb-3">Beatmap Pool ({{ beatmaps.length }})</h6>
+
+        <div *ngFor="let beatmap of beatmaps; let i = index" class="row g-2 mb-2 align-items-center">
+            <div class="col-3">
+                <input type="text" class="form-control form-control-sm text-center fw-bold"
+                    [(ngModel)]="beatmaps[i].slot" placeholder="e.g. NM1" />
+            </div>
+            <div class="col-7">
+                <input type="number" class="form-control form-control-sm" [(ngModel)]="beatmaps[i].beatmap_id"
+                    placeholder="Beatmap ID" />
+            </div>
+            <div class="col-2 text-end">
+                <button class="btn btn-sm btn-outline-danger" (click)="removeBeatmapRow(i)" title="Remove Beatmap">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Actions for Beatmap Pool -->
+        <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-sm btn-outline-success" (click)="addBeatmapRow()">
+                + Add Beatmap
+            </button>
+
+            <button class="btn btn-sm btn-primary px-4" (click)="savePool()" [disabled]="beatmaps.length === 0">
+                Save Pool
+            </button>
+        </div>
+
+        <div *ngIf="hasSavedPool" class="alert alert-success mt-3 py-2 text-center" role="alert">
+            Pool saved successfully!
+        </div>
+    </div>
+
+    <!-- Right Section: MP Links -->
+    <div class="col-md-6 ps-4 position-relative">
+        <h6 class="text-secondary mb-3">Match MP Links</h6>
+
+        <ng-container *ngIf="hasSavedPool; else mpLinksLocked">
+            <p class="text-muted small mb-2">
+                Paste MP link IDs here, one per line or separated by commas.
+            </p>
+            <textarea class="form-control mb-3 font-monospace" rows="8" [(ngModel)]="mpLinkIds"
+                placeholder="e.g.&#10;1132456&#10;1132457&#10;1132458"></textarea>
+
+            <div class="text-end">
+                <button class="btn btn-sm btn-primary px-4" (click)="saveMpLinks()" [disabled]="!mpLinkIds.trim()">
+                    Save MP Links
+                </button>
+            </div>
+        </ng-container>
+
+        <ng-template #mpLinksLocked>
+            <div class="d-flex flex-column align-items-center justify-content-center h-100 text-muted opacity-50 py-5">
+                <i class="bi bi-lock-fill fs-1 mb-2"></i>
+                <p class="mb-0">Save the beatmap pool to unlock MP links.</p>
+            </div>
+        </ng-template>
+    </div>
+</div>

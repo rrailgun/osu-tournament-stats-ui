@@ -1,9 +1,9 @@
 import { Round } from "./round";
+import { User } from "./user";
 
 export interface Tournament {
     id: string;
     name: string;
-    creator_id: string;
-    creator_username: string;
+    creator: User
     rounds: Round[];
 }

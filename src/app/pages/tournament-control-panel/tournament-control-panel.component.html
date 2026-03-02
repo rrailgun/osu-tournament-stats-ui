@@ -1,61 +1,114 @@
 <ng-container *ngIf="tournament$ | async as tournament; else loading">
+
   <div class="container my-5">
     <div class="card shadow-sm">
       <div class="card-body">
+
         <h2 class="card-title text-primary mb-4">Control Panel</h2>
 
+        <!-- TITLE EDIT -->
         <form class="row g-3 align-items-center mb-4" (ngSubmit)="saveTitle()">
           <div class="col-auto">
             <label for="titleInput" class="col-form-label fw-semibold">Title:</label>
           </div>
+
           <div class="col-auto flex-grow-1">
-            <input
-              id="titleInput"
-              type="text"
-              class="form-control"
-              [(ngModel)]="editedTitle"
-              name="title"
-              placeholder="Tournament Title"
-            />
+            <input id="titleInput" type="text" class="form-control" [(ngModel)]="editedTitle" name="title"
+              placeholder="Tournament Title" />
           </div>
+
           <div class="col-auto">
-            <button type="submit" class="btn btn-primary px-4">Save Title</button>
+            <button type="submit" class="btn btn-primary px-4" [disabled]="!editedTitle.trim()">
+              Save Title
+            </button>
           </div>
         </form>
 
+        <!-- CREATOR -->
         <div class="mb-4">
           <h6 class="text-muted">Creator</h6>
-          <p class="fs-5">{{ tournament.creator_username }}</p>
+          <p class="fs-5">{{ tournament.creator.username }}</p>
         </div>
 
+        <!-- ROUNDS SECTION -->
         <div class="rounds-section mt-4">
-          <h4 class="text-secondary mb-3">Rounds</h4>
+          <h4 class="text-secondary mb-3">
+            Rounds
+            <button class="btn btn-sm btn-outline-success ms-2" title="Add Round" (click)="openAddRoundModal()">
+              +
+            </button>
+          </h4>
 
-          <ng-container *ngIf="tournament.rounds!.length > 0; else noRounds">
-            <ul class="nav-tabs mb-3">
-              <li *ngFor="let round of tournament.rounds">
-                <button ngbNavLink>{{ round.round_name }}</button>
-                <ng-template ngbNavContent>
-                  <div class="p-3">
-                    <h5>{{ round.round_name }}</h5>
-                    <app-round-editor></app-round-editor>
-                  </div>
-                </ng-template>
-              </li>
-            </ul>
+          <ng-container *ngIf="tournament.rounds.length > 0; else noRounds">
+
+            <!-- ROUND BUTTONS -->
+            <div class="d-flex gap-2 flex-wrap mt-2 mb-4">
+              <button *ngFor="let round of tournament.rounds" type="button" class="btn px-4 fw-semibold"
+                [class.btn-primary]="selectedRound?.round_id === round.round_id"
+                [class.btn-outline-primary]="selectedRound?.round_id !== round.round_id" (click)="selectRound(round)">
+                {{ round.round_name }}
+              </button>
+            </div>
+
+            <!-- SELECTED ROUND DETAILS -->
+            <div *ngIf="selectedRound" class="p-4 border rounded bg-white shadow-sm">
+              <h5 class="mb-4 text-dark border-bottom pb-2">
+                {{ selectedRound.round_name }} Details
+              </h5>
+
+              <app-round-editor [round]="selectedRound"></app-round-editor>
+            </div>
+
           </ng-container>
         </div>
+
       </div>
     </div>
   </div>
 </ng-container>
 
+<!-- LOADING -->
 <ng-template #loading>
   <app-loading-indicator message="Loading tournament data..."></app-loading-indicator>
 </ng-template>
 
+<!-- NO ROUNDS -->
 <ng-template #noRounds>
-  <div class="alert alert-info mt-3">
-    No rounds yet. <button class="btn btn-sm btn-outline-primary ms-2">Add Round</button>
-  </div>
+  <div class="alert alert-info mt-3">No rounds yet.</div>
 </ng-template>
+
+<!-- ADD ROUND MODAL -->
+<div class="modal fade" [class.show]="showAddRoundModal" [style.display]="showAddRoundModal ? 'block' : 'none'"
+  tabindex="-1" aria-labelledby="add-round-title" [attr.aria-hidden]="!showAddRoundModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="add-round-title">Add Round</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeAddRoundModal()"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="roundName" class="form-label">Round Name</label>
+          <input id="roundName" type="text" class="form-control" name="roundName" [(ngModel)]="newRoundName"
+            placeholder="e.g. Quarterfinals" (keyup.enter)="addRound()" />
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="closeAddRoundModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="addRound()"
+          [disabled]="isAddingRound || !newRoundName.trim()">
+          <span *ngIf="isAddingRound" class="spinner-border spinner-border-sm me-1" role="status"
+            aria-hidden="true"></span>
+          Add
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- BACKDROP -->
+<div *ngIf="showAddRoundModal" class="modal-backdrop fade show"></div>

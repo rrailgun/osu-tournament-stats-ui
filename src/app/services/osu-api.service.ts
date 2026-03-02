@@ -8,6 +8,13 @@ import { Tournament } from '../models/tournament';
 import { Round } from '../models/round';
 import { ScoreFilterService, ScoreFilterPayload } from './score-filter.service';
 
+export type TournamentCard = {
+  id: string;
+  name: string;
+  creator_username: string;
+  creator: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -48,7 +55,15 @@ export class OsuApiService {
     return this.http.get<Round[]>(this.apiUrl + '/tournaments' + tournamentId + '/rounds')
   }
 
-  getTournaments(): Observable<Tournament[]> {
-    return this.http.get<Tournament[]>(this.apiUrl + '/tournaments/search')
+  getTournaments(): Observable<TournamentCard[]> {
+    return this.http.get<TournamentCard[]>(this.apiUrl + '/tournaments/search')
+  }
+
+  createTournament(name: string): Observable<Tournament> {
+    return this.http.post<Tournament>(this.apiUrl + '/tournaments/createTournament', { name });
+  }
+
+  createRound(tournamentId: string, name: string): Observable<Round> {
+    return this.http.post<Round>(this.apiUrl + '/tournaments/createRound', { tournamentId, name });
   }
 }
