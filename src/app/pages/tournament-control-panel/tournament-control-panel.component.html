@@ -77,38 +77,9 @@
   <div class="alert alert-info mt-3">No rounds yet.</div>
 </ng-template>
 
-<!-- ADD ROUND MODAL -->
-<div class="modal fade" [class.show]="showAddRoundModal" [style.display]="showAddRoundModal ? 'block' : 'none'"
-  tabindex="-1" aria-labelledby="add-round-title" [attr.aria-hidden]="!showAddRoundModal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title" id="add-round-title">Add Round</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="closeAddRoundModal()"></button>
-      </div>
-
-      <div class="modal-body">
-        <div class="mb-3">
-          <label for="roundName" class="form-label">Round Name</label>
-          <input id="roundName" type="text" class="form-control" name="roundName" [(ngModel)]="newRoundName"
-            placeholder="e.g. Quarterfinals" (keyup.enter)="addRound()" />
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" (click)="closeAddRoundModal()">Cancel</button>
-        <button type="button" class="btn btn-primary" (click)="addRound()"
-          [disabled]="isAddingRound || !newRoundName.trim()">
-          <span *ngIf="isAddingRound" class="spinner-border spinner-border-sm me-1" role="status"
-            aria-hidden="true"></span>
-          Add
-        </button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- BACKDROP -->
-<div *ngIf="showAddRoundModal" class="modal-backdrop fade show"></div>
+<app-add-round-modal
+  [visible]="showAddRoundModal"
+  [isLoading]="isAddingRound"
+  (close)="closeAddRoundModal()"
+  (add)="handleAddRound($event)">
+</app-add-round-modal>

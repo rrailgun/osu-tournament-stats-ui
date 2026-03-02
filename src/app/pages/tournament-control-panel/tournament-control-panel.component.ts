@@ -7,6 +7,7 @@ import { Tournament } from '../../models/tournament';
 import { LoadingIndicatorComponent } from "../../components/common/loading-indicator/loading-indicator.component";
 import { TournamentEditService } from '../../services/edit/tournament-edit.service';
 import { RoundEditorComponent } from "../../components/editors/round-editor/round-editor.component";
+import { AddRoundModalComponent } from "../../components/editors/add-round-modal/add-round-modal.component";
 
 @Component({
   selector: 'app-tournament-control-panel',
@@ -16,7 +17,8 @@ import { RoundEditorComponent } from "../../components/editors/round-editor/roun
     AsyncPipe,
     FormsModule,
     LoadingIndicatorComponent,
-    RoundEditorComponent
+    RoundEditorComponent,
+    AddRoundModalComponent
   ],
   templateUrl: './tournament-control-panel.component.html',
   styleUrls: ['./tournament-control-panel.component.css']
@@ -36,7 +38,6 @@ export class TournamentControlPanelComponent {
 
   // modal state
   showAddRoundModal = false;
-  newRoundName = '';
   isAddingRound = false;
 
   ngOnInit(): void {
@@ -74,15 +75,14 @@ export class TournamentControlPanelComponent {
 
   closeAddRoundModal() {
     this.showAddRoundModal = false;
-    this.newRoundName = '';
   }
 
-  addRound() {
-    if (!this.newRoundName.trim() || this.isAddingRound) return;
+  handleAddRound(name: string) {
+    if (this.isAddingRound) return;
 
     this.isAddingRound = true;
 
-    this.tournamentService.createRound(this.newRoundName).subscribe({
+    this.tournamentService.createRound(name).subscribe({
       next: () => {
         this.isAddingRound = false;
         this.closeAddRoundModal();
